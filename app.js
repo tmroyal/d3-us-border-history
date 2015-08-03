@@ -76,13 +76,29 @@ var tooltip = d3.select('body')
                   'font-family':'"Helvetica"',
                   'background': '#fff',
                   'opacity': 0.9,
-                  padding: '20px',
+                  width: '330px',
+                  padding: '40px',
                   border: '1px solid #ddd',
+                  'border-radius': '5px'
                 });
+
 
 var tooltipTitle = tooltip.append('div').text('title');
 tooltip.append('hr');
+var tooltipTerrType = tooltip.append('div')
+                             .style({
+                               'color': '#aaa',
+                               'font-size': 14+'px',
+                               'font-style': 'italic'
+                             });
+
 var tooltipText = tooltip.append('div').text('text');
+
+var tooltipCitation = tooltip.append('div')
+    .style({
+      'font-size': 12+'px',
+      'color': '#aaa'
+    });
 
 
 var requestedDate = new Date(1862,9,1);
@@ -121,16 +137,24 @@ d3.json('USA-border-data.json', function(json){
      })
      .on('mouseover', function(d){
        var centroid = path.centroid(d);
-       tooltip.style({
+       var terrType = isConfederate(requestedDate, d.properties.NAME) ? 'Confederate State' : d.properties.TERR_TYPE;
+       tooltip.transition().duration(100).style({
          'visibility': 'visible',
          'left': centroid[0]+'px',
          'top': centroid[1]+'px'
        })
+       tooltipText.text(d.properties.CHANGE);
+       tooltipTitle.text(d.properties.NAME_START);
 
-       .text(d.properties.NAME+d.properties.CHANGE);
-              
-       //console.log(d.properties.NAME);
-       //console.log(path.centroid(d));
+       tooltipTerrType.text(terrType);
+       
+       tooltipTerrType.style({
+         color: terrType === 'Confederate State' ? 
+                          'hsl(200, 50%, 50%)' :
+                          territoryColoring[terrType]
+       });
+
+       tooltipCitation.text(d.properties.CITATION);
      })
      .append('title')
      .text(function(d){ return d.properties.NAME; });
