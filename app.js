@@ -51,7 +51,7 @@ function isConfederate(date, state){
   return dates.start < date && date < dates.end;
 }
 
-var w = 1600, h=800;
+var w = 1000, h=600;
 
 var projection = d3.geo
                    .albersUsa()
@@ -156,6 +156,10 @@ d3.json('USA-border-data.json', function(json){
 
        tooltipCitation.text(d.properties.CITATION);
      })
+     .on('click', function(){
+       tooltip.style('visibility','hidden');
+     })
+	.on("mouseout", function(){return tooltip.style("visibility", "hidden");})
      .append('title')
      .text(function(d){ return d.properties.NAME; });
     
