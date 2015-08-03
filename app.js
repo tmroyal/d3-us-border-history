@@ -72,10 +72,9 @@ var tooltip = d3.select('body')
                 .style({
                   'position':'absolute',
                   'z-index': '10',
-                  'visibility': 'hidden',
                   'font-family':'"Helvetica"',
                   'background': '#fff',
-                  'opacity': 0.9,
+                  'opacity': 0,
                   width: '330px',
                   padding: '40px',
                   border: '1px solid #ddd',
@@ -136,12 +135,13 @@ d3.json('USA-border-data.json', function(json){
        stroke: 'white',
      })
      .on('mouseover', function(d){
+       d3.select(this).attr('fill','#a89');
        var centroid = path.centroid(d);
        var terrType = isConfederate(requestedDate, d.properties.NAME) ? 'Confederate State' : d.properties.TERR_TYPE;
        tooltip.transition().duration(100).style({
-         'visibility': 'visible',
-         'left': centroid[0]+'px',
-         'top': centroid[1]+'px'
+         'opacity': 0.9,
+         'left': event.pageX+20+'px',
+         'top': event.pageY-50+'px'
        })
        tooltipText.text(d.properties.CHANGE);
        tooltipTitle.text(d.properties.NAME_START);
@@ -156,10 +156,27 @@ d3.json('USA-border-data.json', function(json){
 
        tooltipCitation.text(d.properties.CITATION);
      })
-     .on('click', function(){
-       tooltip.style('visibility','hidden');
+     .on('mousemove', function(d){
+       tooltip.style({
+         'left': event.pageX+20+'px',
+         'top': event.pageY-50+'px'
+       })
      })
-	.on("mouseout", function(){return tooltip.style("visibility", "hidden");})
+     .on('click', function(){
+       tooltip.transition().style('opacity','0');
+     })
+	.on("mouseout", function(d){
+    d3.select(this).attr({
+       fill: function(d){ 
+         if (isConfederate(requestedDate, d.properties.NAME)){
+           return 'hsl(220, 50%, 50%)';
+         } else {
+           return territoryColoring[d.properties.TERR_TYPE];
+         }
+       }
+    });
+    tooltip.transition().style("opacity", "0");
+  })
      .append('title')
      .text(function(d){ return d.properties.NAME; });
     
