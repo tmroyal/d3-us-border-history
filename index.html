@@ -2,11 +2,25 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="nouislider.css">
+  <link rel="stylesheet" type="text/css" href="nouislider.css">
+  <link rel="stylesheet" href="borderdata.css">
   <title>Historical Border Data - United States of America</title>
 </head>
 <body>
 <div id="range"></div>
+
+<button id="prevButton">&larr;</button>
+<span id="currentDate"></span>
+<button id="nextButton">&rarr;</button>
+
+<div id="mapTooltip">
+  <div id="tt_title"></div>
+  <hr>
+  <div id="tt_terrtype"></div>
+  <div id="tt_text"></div>
+  <div id="tt_citation"></div>
+</div>
+
 <script src="./bower_components/d3/d3.js"></script>
 <script src="nouislider.js"></script>
 <script src="app.js"></script>
