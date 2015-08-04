@@ -19,19 +19,22 @@ $colors : (
   background: #fff;
   opacity: 0;
   visibility: hidden;
-  width: 330px;
-  padding: 40px;
+  width: 220px;
+  padding: 20px;
   border: 1px solid #ddd;
-  border-radius: 5px
+  border-radius: 5px;
+  font-size: 14px;
+}
+#tt_title {
 }
 
 #tt_terrtype{
-   font-size: 14px;
+   font-size: 12px;
    font-style: italic;
 }
 
 #tt_citation{
-  font-size: 12px;
+  font-size: 10px;
   color: #aaa;
 }
 
