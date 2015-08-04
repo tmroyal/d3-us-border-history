@@ -1,3 +1,13 @@
+var slider = document.getElementById('range');
+noUiSlider.create(slider, {
+	start: [new Date(1880, 1).getTime()],
+	range: {
+		'min': new Date(1783, 9, 3).getTime(),
+		'max': new Date(2000, 12, 31).getTime()
+	}
+})
+slider.noUiSlider.on('update', function(){ console.log(new Date(arguments[2])) });
+
 var confederateDates = {
   'South Carolina': {
     start: new Date('December 20, 1860'),
@@ -75,6 +85,7 @@ var tooltip = d3.select('body')
                   'font-family':'"Helvetica"',
                   'background': '#fff',
                   'opacity': 0,
+                  'visibility': 'hidden',
                   width: '330px',
                   padding: '40px',
                   border: '1px solid #ddd',
@@ -140,6 +151,7 @@ d3.json('USA-border-data.json', function(json){
        var terrType = isConfederate(requestedDate, d.properties.NAME) ? 'Confederate State' : d.properties.TERR_TYPE;
        tooltip.transition().duration(100).style({
          'opacity': 0.9,
+         'visibility': 'visible', 
          'left': event.pageX+20+'px',
          'top': event.pageY-50+'px'
        })
@@ -163,7 +175,10 @@ d3.json('USA-border-data.json', function(json){
        })
      })
      .on('click', function(){
-       tooltip.transition().style('opacity','0');
+       tooltip.transition().style({
+         'opacity':'0',
+         'visibility':'hidden'
+       });
      })
 	.on("mouseout", function(d){
     d3.select(this).attr({
@@ -175,7 +190,10 @@ d3.json('USA-border-data.json', function(json){
          }
        }
     });
-    tooltip.transition().style("opacity", "0");
+    tooltip.transition().style({
+      "opacity": "0",
+      "visibility": "hidden"}
+      );
   })
      .append('title')
      .text(function(d){ return d.properties.NAME; });
