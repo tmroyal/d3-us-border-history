@@ -53,6 +53,7 @@ var confederateDates = {
 function isConfederate(date, state){
   var dates = confederateDates[state];
   if (!dates){ return false; }
+  console.log(dates, date);
   return dates.start < date && date < dates.end;
 }
 
@@ -119,7 +120,7 @@ d3.json('USA-border-data.json', function(json){
     start: [requestedDate.getTime()],
     range: {
       'min': new Date(1783, 9, 3).getTime(),
-      'max': new Date(2000, 1).getTime()
+      'max': new Date(1960, 1).getTime()
     },
   })
 
@@ -128,22 +129,37 @@ d3.json('USA-border-data.json', function(json){
     var requestedEvents = data.features.filter(function(d){
       var start = new Date(d.properties.START_DATE);
       var end = new Date(d.properties.END_DATE);
-      
-      return start < requestedDate && requestedDate < end;
+      var name = d.properties.NAME;
+
+      return name !== 'Deseret' && start < requestedDate && requestedDate < end;
     });
-    update(requestedEvents);
+    update(requestedDate, requestedEvents);
   });
     
 });
 
-function update(requestedEvents){
+function update(requestedDate, requestedEvents){
   var paths = svg.selectAll('path')
                   .data(requestedEvents, function(d){
                     return d.properties.NAME;
                   });
 
   paths.enter()
-     .append('path')
+     .append('path');
+  //.append('title')
+  //.text(function(d){ return d.properties.NAME; });
+
+  paths.attr({
+       d: path,
+       fill: function(d){ 
+         if (isConfederate(requestedDate, d.properties.NAME)){
+           return 'hsl(220, 50%, 50%)';
+         } else {
+           return territoryColoring[d.properties.TERR_TYPE];
+         }
+       },
+       stroke: 'white',
+     })
      .on('mouseover', function(d){
        d3.select(this).attr('fill','#a89');
        var centroid = path.centroid(d);
@@ -194,23 +210,8 @@ function update(requestedEvents){
       "visibility": "hidden"
     });
   })
-  .append('title')
-  .text(function(d){ return d.properties.NAME; });
-
-  paths.attr({
-       d: path,
-       fill: function(d){ 
-         if (isConfederate(requestedDate, d.properties.NAME)){
-           return 'hsl(220, 50%, 50%)';
-         } else {
-           return territoryColoring[d.properties.TERR_TYPE];
-         }
-       },
-       stroke: 'white',
-     })
 
 
   paths.exit().remove();
-  console.log(paths);
 }
 
