@@ -1,5 +1,6 @@
 var requestedDate = new Date(1862,9,1);
 var data;
+var datePoints;
 
 var slider = document.getElementById('range');
 
@@ -58,8 +59,37 @@ var confederateDates = {
 function isConfederate(date, state){
   var dates = confederateDates[state];
   if (!dates){ return false; }
-  console.log(dates, date);
   return dates.start < date && date < dates.end;
+}
+
+function setupDatePoints(data){
+  datePoints = {};
+
+  // filter duplicates
+  data.features.forEach(function(data){
+    datePoints[data.properties.START_DATE] = true;
+  });
+
+  datePoints = Object.keys(datePoints).map(function(key){
+    return new Date(key);
+  });
+  
+  // javascript has issues with sorting 
+  // old dates
+  datePoints.sort(function(a,b){
+    var yc, mc;
+    yc = a.getFullYear()-b.getFullYear();
+    if (yc === 0){
+      mc = a.getMonth()-b.getMonth();
+      if (mc === 0){
+        return a.getDate()-b.getDate();
+      } else {
+        return mc;
+      }
+    } else {
+      return yc;
+    }
+  });
 }
 
 var w = 1000, h=600;
@@ -121,23 +151,26 @@ var territoryColoring = {
 
 d3.json('USA-border-data.json', function(json){
   data = json;
+  setupDatePoints(data);
+
   noUiSlider.create(slider, {
     start: [requestedDate.getTime()],
-    step: 2505600000,
+    step: 1,
     range: {
-      'min': new Date(1783, 9, 3).getTime(),
-      'max': new Date(1960, 1).getTime()
+      'min': 0,
+      'max': datePoints.length-1
     },
   })
 
   slider.noUiSlider.on('update', function(val){ 
-    var requestedDate = new Date(Math.floor(val[0]));
+    var requestedDate = datePoints[Math.floor(val)];
+    console.log(val,requestedDate);
     var requestedEvents = data.features.filter(function(d){
       var start = new Date(d.properties.START_DATE);
       var end = new Date(d.properties.END_DATE);
       var name = d.properties.NAME;
 
-      return name !== 'Deseret' && start < requestedDate && requestedDate < end;
+      return name !== 'Deseret' && start <= requestedDate && requestedDate <= end;
     });
     currentDateDisplay.text(formated(requestedDate));
     
@@ -154,8 +187,6 @@ function update(requestedDate, requestedEvents){
 
   paths.enter()
      .append('path');
-  //.append('title')
-  //.text(function(d){ return d.properties.NAME; });
 
   paths.attr({
        d: path,
