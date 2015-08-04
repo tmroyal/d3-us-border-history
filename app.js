@@ -82,15 +82,15 @@ var DatePicker = function(initialIndex){
   }
 
   function incrementDate(){
-    if (requestDateIndex > 0){
-      requestedDateIndex--;
+    if (requestedDateIndex > 0){
+      requestedDateIndex++;
       slider.noUiSlider.set(requestedDateIndex);
     }
   }
 
   function decrementDate(){
     if (requestedDateIndex < datePoints.length - 1){
-      requestedDateIndex++;
+      requestedDateIndex--;
       slider.noUiSlider.set(requestedDateIndex);
     }
   }
