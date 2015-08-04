@@ -37,7 +37,7 @@
 #mapTooltip {
   position: absolute;
   z-index: 10;
-  font-family: "Helvetica";
+  font-family: "Helvetica","Arial",sans-serif;
   background: #fff;
   opacity: 0;
   visibility: hidden;
@@ -46,6 +46,9 @@
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 14px; }
+
+#tt_title {
+  font-size: 16px; }
 
 #tt_terrtype {
   font-size: 12px;
@@ -60,3 +63,6 @@
 
 .highlight_fill {
   fill: #a89; }
+
+.noUi-target {
+  margin: 20px; }

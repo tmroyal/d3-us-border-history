@@ -15,7 +15,7 @@ $colors : (
 #mapTooltip{
   position: absolute;
   z-index: 10;
-  font-family: "Helvetica";
+  font-family: "Helvetica","Arial",sans-serif;
   background: #fff;
   opacity: 0;
   visibility: hidden;
@@ -26,6 +26,7 @@ $colors : (
   font-size: 14px;
 }
 #tt_title {
+  font-size: 16px;
 }
 
 #tt_terrtype{
@@ -44,5 +45,9 @@ $colors : (
 
 .highlight_fill{
   fill: #a89;
+}
+
+.noUi-target{
+  margin: 20px;
 }
 
