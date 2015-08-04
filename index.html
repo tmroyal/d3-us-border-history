@@ -7,11 +7,19 @@
   <title>Historical Border Data - United States of America</title>
 </head>
 <body>
+<div id="titlebar">
+  Historial Progression of U.S.A. Borders (1783-1959) | 
+  <a href="https://github.com/tmroyal/d3-us-border-history" target="_blank">View source</a> | 
+  <a href="https://github.com/tmroyal/d3-us-border-history">Download GeoJSON of current view</a>
+</div>
 <div id="range"></div>
 
+
+<div id="dateDisplay">
+<div id="currentDate"></div>
 <button id="prevButton">&larr;</button>
-<span id="currentDate"></span>
 <button id="nextButton">&rarr;</button>
+</div>
 
 <div id="mapTooltip">
   <div id="tt_title"></div>
@@ -22,6 +30,7 @@
 </div>
 
 <svg id="map" style="width: 100%"></svg>
+
 
 <script src="./bower_components/d3/d3.js"></script>
 <script src="nouislider.js"></script>

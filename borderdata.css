@@ -37,7 +37,7 @@
 #mapTooltip {
   position: absolute;
   z-index: 10;
-  font-family: "Helvetica","Arial",sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   background: #fff;
   opacity: 0;
   visibility: hidden;
@@ -70,4 +70,26 @@
 .noUi-handle {
   background: #adc;
   border: 1px solid #9a9;
-  box-shadow: none; }
+  box-shadow: none;
+  height: 12px; }
+
+.noUi-horizontal .noUi-handle {
+  height: 20px; }
+
+.noUi-handle:before, .noUi-handle:after {
+  height: 8px;
+  top: 5px; }
+
+.noUi-horizontal {
+  height: 10px; }
+
+#dateDisplay {
+  text-align: center;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  color: #555; }
+
+#titlebar {
+  font-family: Helvetica, Arial, sans-serif;
+  color: #666;
+  text-align: center; }
