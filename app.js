@@ -253,32 +253,50 @@ var TerrTypeUtil = function(){
 
 var MapView = function(){
 
-  var w = 1000, h = 600;
+  var width, height;
 
-  var projection = d3.geo.albersUsa()
-                          .translate([w/2, h/2])
-                          .scale([w]);
+  var svg = d3.select('#map');
+
+  var projection = d3.geo.albersUsa();
 
   var path = d3.geo.path().projection(projection);
 
-  var svg = d3.select('body').append('svg');
+  var currentData, currentDate;
 
-  svg.attr({ width: w, height: h, });
-
-  svg.append('rect')
+  var hiddenRect = svg.append('rect')
      .attr({
-       width: w, 
-       height: h, 
        opacity: 0,
      })
-
-    .on('mousemove', function(){
+     .on('mousemove', function(){
        Tooltip.move(event);
+     });
+
+  function setDimensions(){
+    width = parseInt(svg.style('width'));
+    height = width*0.5;
+
+    svg.style({ height: height});
+    projection.translate([width/2, height/2]).scale([width*1.1]);
+
+    hiddenRect.attr({
+      width: width, 
+      height: height, 
     });
 
-  function update(requestedDate, requestedEvents){
+  }
+  setDimensions();
+
+  d3.select(window).on('resize', function(){
+    setDimensions();
+    update(currentDate, currentData);
+  });
+
+  function update(requestedDate, requestedFeatures){
+    currentData = requestedFeatures;
+    currentDate = requestedDate;
+
     var paths = svg.selectAll('path')
-                    .data(requestedEvents, function(d){
+                    .data(requestedFeatures, function(d){
                       // key will be property name
                       return d.properties.NAME;
                     });
