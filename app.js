@@ -36,9 +36,12 @@ var DatePicker = function(initialIndex){
   var requestedDate;
   var requestedDateIndex = initialIndex || 50;
   var datePoints;
+
   var slider = document.getElementById('range');
   var currentDateDisplay = d3.select('#currentDate');
   var formated = d3.time.format('%B %d %Y');
+
+  var downloadLink;
 
   function setupDatePoints(data, confederateDates){
     var datePoints = {};
@@ -102,6 +105,8 @@ var DatePicker = function(initialIndex){
     d3.select('#prevButton').on('click', decrementDate); 
     d3.select('#nextButton').on('click', incrementDate);
 
+    downloadLink =  d3.select('#downloadLink');
+
     currentDateDisplay = d3.select('#currentDate');
     formated = d3.time.format('%B %d %Y');
 
@@ -117,14 +122,28 @@ var DatePicker = function(initialIndex){
     });
 
     slider.noUiSlider.on('update', function(val){ 
+      var requestedFeatures, downloadData;
+
+      // update display
       requestedDateIndex = Math.floor(val);
       requestedDate = datePoints[requestedDateIndex];
 
       currentDateDisplay.text(formated(requestedDate));
-      updateCallback(
-        requestedDate, 
-        FeatureFilter.getFeaturesAtDate(requestedDate)
-      );
+      requestedFeatures = FeatureFilter.getFeaturesAtDate(requestedDate);
+
+      updateCallback( requestedDate, requestedFeatures);
+
+      // set download data
+
+      downloadData = requestedFeatures.slice(0);
+      downloadData = {
+        "type": "FeatureCollection",
+        "features": downloadData
+      };
+      
+      downloadData = encodeURIComponent(JSON.stringify(downloadData));
+
+      downloadLink.attr('href', 'data:application/csv;charset=utf-8,' + downloadData);
     });
   };
   
