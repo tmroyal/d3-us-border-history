@@ -3,6 +3,11 @@ var data;
 
 var slider = document.getElementById('range');
 
+var currentDateDisplay = d3.select('body')
+                           .append('div');
+
+var formated = d3.time.format('%B %Y');
+
 var confederateDates = {
   'South Carolina': {
     start: new Date('December 20, 1860'),
@@ -118,6 +123,7 @@ d3.json('USA-border-data.json', function(json){
   data = json;
   noUiSlider.create(slider, {
     start: [requestedDate.getTime()],
+    step: 2505600000,
     range: {
       'min': new Date(1783, 9, 3).getTime(),
       'max': new Date(1960, 1).getTime()
@@ -133,6 +139,8 @@ d3.json('USA-border-data.json', function(json){
 
       return name !== 'Deseret' && start < requestedDate && requestedDate < end;
     });
+    currentDateDisplay.text(formated(requestedDate));
+    
     update(requestedDate, requestedEvents);
   });
     
