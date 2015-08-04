@@ -156,9 +156,33 @@ var Tooltip = function(){
   };
 
   tooltip.move = function(event){
+    var width = window.innerWidth
+    || document.documentElement.clientWidth
+    || document.body.clientWidth;
+
+    var height = window.innerHeight
+    || document.documentElement.clientHeight
+    || document.body.clientHeight;
+
+    var top, left;
+
+    if (event.pageX < width/2){
+      left = event.pageX+20+'px';
+    } else {
+      // this is derived from the current css
+      left = event.pageX - 300+'px';
+    }
+
+    if (event.pageY < height/2){
+      top = event.pageY+'px';
+    } else {
+      // guestimate
+      top = event.pageY-100+'px';
+    }
+
     tt_div.style({
-      'left': event.pageX+20+'px',
-      'top': event.pageY-50+'px'
+      'left': left,
+      'top': top
     });
   };
 
