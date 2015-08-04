@@ -7,7 +7,7 @@ var slider = document.getElementById('range');
 var currentDateDisplay = d3.select('body')
                            .append('div');
 
-var formated = d3.time.format('%B %Y');
+var formated = d3.time.format('%B %d %Y');
 
 var confederateDates = {
   'South Carolina': {
@@ -70,9 +70,17 @@ function setupDatePoints(data){
     datePoints[data.properties.START_DATE] = true;
   });
 
+
   datePoints = Object.keys(datePoints).map(function(key){
     return new Date(key);
   });
+
+  for (state in confederateDates){
+    if (confederateDates.hasOwnProperty(state)){
+      datePoints.push(confederateDates[state].start);
+      datePoints.push(confederateDates[state].end);
+    }
+  }
   
   // javascript has issues with sorting 
   // old dates
@@ -154,7 +162,7 @@ d3.json('USA-border-data.json', function(json){
   setupDatePoints(data);
 
   noUiSlider.create(slider, {
-    start: [requestedDate.getTime()],
+    start: [50],
     step: 1,
     range: {
       'min': 0,
@@ -164,7 +172,6 @@ d3.json('USA-border-data.json', function(json){
 
   slider.noUiSlider.on('update', function(val){ 
     var requestedDate = datePoints[Math.floor(val)];
-    console.log(val,requestedDate);
     var requestedEvents = data.features.filter(function(d){
       var start = new Date(d.properties.START_DATE);
       var end = new Date(d.properties.END_DATE);
