@@ -1,12 +1,7 @@
+var requestedDate = new Date(1862,9,1);
+var data;
+
 var slider = document.getElementById('range');
-noUiSlider.create(slider, {
-	start: [new Date(1880, 1).getTime()],
-	range: {
-		'min': new Date(1783, 9, 3).getTime(),
-		'max': new Date(2000, 12, 31).getTime()
-	}
-})
-slider.noUiSlider.on('update', function(){ console.log(new Date(arguments[2])) });
 
 var confederateDates = {
   'South Carolina': {
@@ -67,7 +62,6 @@ var projection = d3.geo
                    .albersUsa()
                    .translate([w/2, h/2])
                    .scale([w]);
-
 var path = d3.geo.path().projection(projection);
 
 var svg = d3.select('body')
@@ -110,10 +104,6 @@ var tooltipCitation = tooltip.append('div')
       'color': '#aaa'
     });
 
-
-var requestedDate = new Date(1862,9,1);
-
-
 var territoryColoring = {
   State: 'hsl(190, 50%, 50%)',
   Territory: 'hsl(190, 20%, 50%)',
@@ -122,29 +112,38 @@ var territoryColoring = {
   'Unorganized Territory': '#999'
 };
 
-d3.json('USA-border-data.json', function(json){
-  var requestedEvents = json.features.filter(function(d){
-    var start = new Date(d.properties.START_DATE);
-    var end = new Date(d.properties.END_DATE);
-    
-    return start < requestedDate && requestedDate < end;
-  });
 
-  svg.selectAll('path')
-     .data(requestedEvents)
-     .enter()
+d3.json('USA-border-data.json', function(json){
+  data = json;
+  noUiSlider.create(slider, {
+    start: [requestedDate.getTime()],
+    range: {
+      'min': new Date(1783, 9, 3).getTime(),
+      'max': new Date(2000, 1).getTime()
+    },
+  })
+
+  slider.noUiSlider.on('update', function(val){ 
+    var requestedDate = new Date(Math.floor(val[0]));
+    var requestedEvents = data.features.filter(function(d){
+      var start = new Date(d.properties.START_DATE);
+      var end = new Date(d.properties.END_DATE);
+      
+      return start < requestedDate && requestedDate < end;
+    });
+    update(requestedEvents);
+  });
+    
+});
+
+function update(requestedEvents){
+  var paths = svg.selectAll('path')
+                  .data(requestedEvents, function(d){
+                    return d.properties.NAME;
+                  });
+
+  paths.enter()
      .append('path')
-     .attr({
-       d: path,
-       fill: function(d){ 
-         if (isConfederate(requestedDate, d.properties.NAME)){
-           return 'hsl(220, 50%, 50%)';
-         } else {
-           return territoryColoring[d.properties.TERR_TYPE];
-         }
-       },
-       stroke: 'white',
-     })
      .on('mouseover', function(d){
        d3.select(this).attr('fill','#a89');
        var centroid = path.centroid(d);
@@ -177,11 +176,10 @@ d3.json('USA-border-data.json', function(json){
      .on('click', function(){
        tooltip.transition().style({
          'opacity':'0',
-         'visibility':'hidden'
-       });
+       }).transition().style('visibility', 'hidden');
      })
-	.on("mouseout", function(d){
-    d3.select(this).attr({
+    .on("mouseout", function(d){
+      d3.select(this).attr({
        fill: function(d){ 
          if (isConfederate(requestedDate, d.properties.NAME)){
            return 'hsl(220, 50%, 50%)';
@@ -192,11 +190,27 @@ d3.json('USA-border-data.json', function(json){
     });
     tooltip.transition().style({
       "opacity": "0",
-      "visibility": "hidden"}
-      );
+    }).transition().style({
+      "visibility": "hidden"
+    });
   })
-     .append('title')
-     .text(function(d){ return d.properties.NAME; });
-    
-});
+  .append('title')
+  .text(function(d){ return d.properties.NAME; });
+
+  paths.attr({
+       d: path,
+       fill: function(d){ 
+         if (isConfederate(requestedDate, d.properties.NAME)){
+           return 'hsl(220, 50%, 50%)';
+         } else {
+           return territoryColoring[d.properties.TERR_TYPE];
+         }
+       },
+       stroke: 'white',
+     })
+
+
+  paths.exit().remove();
+  console.log(paths);
+}
 
