@@ -1,38 +1,38 @@
 .confederate_state_fill {
-  fill: #4095bf; }
+  fill: #328; }
 
 .confederate_state_color {
-  color: #4095bf; }
+  color: #328; }
 
 .state_fill {
-  fill: #40aabf; }
+  fill: #4a9; }
 
 .state_color {
-  color: #40aabf; }
+  color: #4a9; }
 
 .territory_fill {
-  fill: #669199; }
+  fill: #8ce; }
 
 .territory_color {
-  color: #669199; }
+  color: #8ce; }
 
 .district_of_columbia_fill {
-  fill: purple; }
+  fill: #825; }
 
 .district_of_columbia_color {
-  color: purple; }
+  color: #825; }
 
 .other_fill {
-  fill: #bfbf40; }
+  fill: #dc7; }
 
 .other_color {
-  color: #bfbf40; }
+  color: #dc7; }
 
 .unorganized_territory_fill {
-  fill: #999; }
+  fill: #995; }
 
 .unorganized_territory_color {
-  color: #999; }
+  color: #995; }
 
 #mapTooltip {
   position: absolute;
@@ -62,7 +62,7 @@
   stroke: white; }
 
 .highlight_fill {
-  fill: #a89; }
+  fill: #c67; }
 
 .noUi-target {
   margin: 20px; }

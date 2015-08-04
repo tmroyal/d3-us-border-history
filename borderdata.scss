@@ -1,10 +1,10 @@
 $colors : (
-  confederate_state: hsl(200, 50%, 50%),
-  state: hsl(190, 50%, 50%),
-  territory: hsl(190, 20%, 50%),
-  district_of_columbia: purple,
-  other: hsl(60, 50%, 50%),
-  unorganized_territory: #999,
+  confederate_state: #328,
+  state: #4a9,
+  territory: #8ce,
+  district_of_columbia: #825,
+  other: #dc7,
+  unorganized_territory: #995,
 );
 
 $ss: "Helvetica","Arial",sans-serif;
@@ -46,7 +46,7 @@ $ss: "Helvetica","Arial",sans-serif;
 }
 
 .highlight_fill{
-  fill: #a89;
+  fill: #c67;
 }
 
 .noUi-target{
