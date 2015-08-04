@@ -25,6 +25,7 @@ var FeatureFilter = function(){
   };
 
   return filter;
+
 }();
 
 //--------------------------
@@ -133,6 +134,7 @@ var DatePicker = function(initialIndex){
   };
 
   return picker;
+
 }();
 
 //-------------------------
@@ -186,6 +188,7 @@ var Tooltip = function(){
   });
 
   return tooltip;
+
 }();
 
 //--------------------------
@@ -218,6 +221,7 @@ var TerrTypeUtil = function(){
   }
 
   return util;
+
 }();
 
 
