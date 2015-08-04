@@ -50,11 +50,11 @@ var DatePicker = function(initialIndex){
     // add confederate dates
     for (state in confederateDates){
       if (confederateDates.hasOwnProperty(state)){
-        datePoints[confederateDates[state].start];
-        datePoints[confederateDates[state].end];
+        datePoints[confederateDates[state].start] = true;
+        datePoints[confederateDates[state].end] = true;
       }
     }
-
+    
     // convert strings to date
     datePoints = Object.keys(datePoints).map(function(key){
       return new Date(key);
@@ -203,7 +203,7 @@ var TerrTypeUtil = function(){
   util.getType = function(properties, date, css){
     var res;
     var cdates = confederateDates[properties.NAME];
-    if (cdates && cdates.start < date && date < cdates.end){ 
+    if (cdates && new Date(cdates.start) < date && date < new Date(cdates.end)){ 
       res = 'Confederate State';
     } else {
       res = properties.TERR_TYPE;
