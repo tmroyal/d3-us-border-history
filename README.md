@@ -5,6 +5,12 @@ Historical border data is provided by the Dr. William M. Scholl Center for Ameri
 at the Newberry Library. Original GIS data is available under a creative commons license 
 at [http://publications.newberry.org/ahcbp/downloads/united_states.html](http://publications.newberry.org/ahcbp/downloads/united_states.html).
 
+# Caveats
+
+- In the dataset, there is mention made of the state of Deseret. This is not drawn on this visualization, but it is included in
+  the dataset.
+- The dataset does not include Confederate Status during the civil war, so this was included programmatically.
+
 # Licenses
 
 All files except for USA-border-data.json are licensed under the MIT license.  Because The Newberry Library license
