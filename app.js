@@ -144,7 +144,6 @@ var Tooltip = function(){
 
   tooltip.setData = function(properties, date){
     var terrType = TerrTypeUtil.getType(properties, date);
-    console.log(terrType);
 
     tt_text.text(properties.CHANGE);
     tt_title.text(properties.NAME_START);
@@ -253,7 +252,6 @@ var MapView = function(){
     paths.attr('d', path)
 
       .attr('class', function(d){
-        console.log(d);
         return 'state '+
                 TerrTypeUtil.getType(d.properties, requestedDate, true)+'_fill';
       })
