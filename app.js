@@ -52,7 +52,7 @@ var DatePicker = function(initialIndex){
     });
 
     // add confederate dates
-    for (state in confederateDates){
+    for (var state in confederateDates){
       if (confederateDates.hasOwnProperty(state)){
         datePoints[confederateDates[state].start] = true;
         datePoints[confederateDates[state].end] = true;
@@ -145,10 +145,10 @@ var DatePicker = function(initialIndex){
 
       downloadLink.attr('href', 'data:application/csv;charset=utf-8,' + downloadData);
     });
-  };
+  }
   
   picker.init = function(data, confederateDates, updateCallback){
-    datePoints = setupDatePoints(data, confederateDates)
+    datePoints = setupDatePoints(data, confederateDates);
     setupUI(updateCallback);    
   };
 
@@ -175,13 +175,13 @@ var Tooltip = function(){
   };
 
   tooltip.move = function(event){
-    var width = window.innerWidth
-    || document.documentElement.clientWidth
-    || document.body.clientWidth;
+    var width = window.innerWidth || 
+      document.documentElement.clientWidth || 
+      document.body.clientWidth;
 
-    var height = window.innerHeight
-    || document.documentElement.clientHeight
-    || document.body.clientHeight;
+    var height = window.innerHeight || 
+      document.documentElement.clientHeight || 
+      document.body.clientHeight;
 
     var top, left;
 
@@ -238,7 +238,7 @@ var Tooltip = function(){
 
 var TerrTypeUtil = function(){
   var util = {};
-  var confederateDates = undefined;
+  var confederateDates;
 
   util.init = function(cdates){
     confederateDates = cdates;
@@ -261,7 +261,7 @@ var TerrTypeUtil = function(){
     } else {
       return res;
     }
-  }
+  };
 
   return util;
 
@@ -359,7 +359,7 @@ var MapView = function(){
     updateCallback: function(){
       return update;
     }
-  }
+  };
 
 }();
 
@@ -381,7 +381,7 @@ var App = function(){
       );
 
     });
-  })
+  });
 
 }();
 
