@@ -154,12 +154,10 @@ var Tooltip = function(){
   };
 
   tooltip.move = function(event){
-    if (!tt_div.style('visibility') === 'hidden'){
-      tt_div.style({
-        'left': event.pageX+20+'px',
-        'top': event.pageY-50+'px'
-      });
-    }
+    tt_div.style({
+      'left': event.pageX+20+'px',
+      'top': event.pageY-50+'px'
+    });
   };
 
   tooltip.hide = function(){
@@ -182,6 +180,10 @@ var Tooltip = function(){
   tt_terrtype = d3.select('#tt_terrtype');
   tt_text = d3.select('#tt_text');
   tt_cite = d3.select('#tt_citation');
+
+  tt_div.on('mousemove', function(){
+    tooltip.move(event);
+  });
 
   return tooltip;
 }();
@@ -231,13 +233,20 @@ var MapView = function(){
 
   var path = d3.geo.path().projection(projection);
 
-  var svg = d3.select('body').append('svg')
+  var svg = d3.select('body').append('svg');
 
   svg.attr({ width: w, height: h, });
 
-  svg.on('movemove', function(){
-     Tooltip.move(event);
-  });
+  svg.append('rect')
+     .attr({
+       width: w, 
+       height: h, 
+       opacity: 0,
+     })
+
+    .on('mousemove', function(){
+       Tooltip.move(event);
+    });
 
   function update(requestedDate, requestedEvents){
     var paths = svg.selectAll('path')
@@ -265,6 +274,9 @@ var MapView = function(){
       })
 
       .on('click', Tooltip.hide)
+      .on('mousemove', function(){
+         Tooltip.move(event);
+      })
 
       .on("mouseout", function(d){
         d3.select(this).attr('class', function(d){
