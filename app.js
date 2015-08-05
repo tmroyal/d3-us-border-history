@@ -109,6 +109,7 @@ var DatePicker = function(initialIndex){
   function updateDate(index, updateMap, updateDataURI){
     var requestedFeatures, downloadData;
 
+
     // update display
     requestedDateIndex = index;
     requestedDate = datePoints[requestedDateIndex];
@@ -375,56 +376,6 @@ var MapView = function(){
   };
 
 }();
-// --------------------
-
-var Spinner = function(){
-  var spinner = {}
-  var svg;
-  var elem;
-  var repeating = false;
-  var squareLength = 50;
-  var halfPoint = squareLength/2;
-  var mid_coords;
-  var mid_square = halfPoint+','+halfPoint;
-
-  function spin(){
-    elem
-      .transition()
-      .attr('transform','translate('+mid_coords+') '+'rotate(270,'+mid_square+')')
-        .duration(500)
-        .each('end', function(){
-          d3.select(this).attr('transform', 'translate('+mid_coords+')');
-          spin();
-        });
-  }
-  
-  spinner.init = function(s){
-    svg = s;
-    mid_coords = parseInt(svg.style('width'))/2 + ',' + parseInt(svg.style('height'))/4;
-    elem = svg.append('rect').
-      attr({
-        width: 50,
-        height: 50,
-        transform: 'translate('+mid_coords+')',
-      })
-      .style({
-        'fill':'rgba(0,0,0,0.6)',
-        'visibility':'hidden'
-      });
-  };
-
-  spinner.show = function(){
-    elem.style('visibility','visible');
-    spin(); 
-  };
-
-  spinner.hide = function(){
-    elem.style('visibility','hidden');
-    repeating = false; 
-  };
-
-  return spinner;
-}();
 
 // --------------------
 
@@ -443,7 +394,6 @@ var App = function(){
         MapView.updateCallback()
       );
 
-      Spinner.init(MapView.getSVGRef());
 
     });
   });
