@@ -1,46 +1,46 @@
 {
   "South Carolina": {
-    "start": "December 20, 1860",
-    "end": "July 9, 1868"
+    "start": "1860-12-20",
+    "end": "1868-07-09"
   },
   "Mississippi": {
-    "start": "January 9, 1861",
-    "end": "February 23, 1870"
+    "start": "1861-01-09",
+    "end": "1870-02-23"
   },
   "Florida": {
-    "start": "January 10, 1861",
-    "end": "June 25, 1868"
+    "start": "1861-01-10",
+    "end": "1868-06-25"
   },
   "Alabama": {
-    "start": "January 11, 1861",
-    "end": "July 14, 1868"
+    "start": "1861-01-11",
+    "end": "1868-07-14"
   },
   "Georgia": {
-    "start": "January 19, 1861",
-    "end": "July 15, 1870"
+    "start": "1861-01-19",
+    "end": "1870-07-15"
   },
   "Louisiana": {
-    "start": "January 26, 1861",
-    "end": "July 9, 1868"
+    "start": "1861-01-26",
+    "end": "1868-07-09"
   },
   "Texas": {
-    "start": "February 1, 1861",
-    "end": "Mar. 30, 1870"
+    "start": "1861-02-01",
+    "end": "1870-03-30"
   },
   "Virginia": {
-    "start": "April 17, 1861",
-    "end": "Jan. 26, 1870"
+    "start": "1861-04-17",
+    "end": "1870-01-26"
   },
   "Arkansas": {
-    "start": "May 6, 1861",
-    "end": " June 22, 1868"
+    "start": "1861-05-06",
+    "end": "1868-06-22"
   },
   "North Carolina": {
-    "start": "May 20, 1861",
-    "end": "July 4, 1868"
+    "start": "1861-05-20",
+    "end": "1868-07-04"
   },
   "Tennessee": {
-    "start": "June 8, 1861",
-    "end": "July 24, 1866"
+    "start": "1861-06-08",
+    "end": "1866-07-24"
   }
 } 

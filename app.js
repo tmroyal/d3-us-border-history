@@ -10,8 +10,8 @@ var FeatureFilter = function(){
 
   filter.getFeaturesAtDate = function(requestedDate){
     return features.filter(function(d){
-        var start = new Date(d.properties.START_DATE);
-        var end = new Date(d.properties.END_DATE);
+        var start = new Date(d.properties.START_DATE.replace(/\//g,'-'));
+        var end = new Date(d.properties.END_DATE.replace(/\//g,'-'));
 
         var name = d.properties.NAME;
         var nameIsExcluded = excludedNames.some(function(exName){
@@ -126,6 +126,10 @@ var DatePicker = function(initialIndex){
 
       // update display
       requestedDateIndex = Math.floor(val);
+      // kludge getting around error in firefox
+      if (requestedDateIndex > datePoints.length - 1){
+        requestedDateIndex = datePoints.length - 1;
+      }
       requestedDate = datePoints[requestedDateIndex];
 
       currentDateDisplay.text(formated(requestedDate));
