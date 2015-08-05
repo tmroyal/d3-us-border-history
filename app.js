@@ -340,7 +340,6 @@ var MapView = function(){
         Tooltip.show();
       })
 
-      .on('click', Tooltip.hide)
       .on('mousemove', function(){
          Tooltip.move(d3.event);
       })
