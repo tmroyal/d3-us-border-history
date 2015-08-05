@@ -104,13 +104,13 @@ var DatePicker = function(initialIndex){
 
   function updateDate(index){
     var requestedFeatures, downloadData;
-    var val = d3.event.target.value;
 
     // update display
     requestedDateIndex = index;
     requestedDate = datePoints[requestedDateIndex];
 
     currentDateDisplay.text(formated(requestedDate));
+    
     requestedFeatures = FeatureFilter.getFeaturesAtDate(requestedDate);
 
     updateCallback( requestedDate, requestedFeatures);
@@ -144,6 +144,8 @@ var DatePicker = function(initialIndex){
     .on('input', function(){
       updateDate(parseInt(d3.event.target.value));
     });
+
+    updateDate(50);    
   }
   
   picker.init = function(data, confederateDates, updateCB){
