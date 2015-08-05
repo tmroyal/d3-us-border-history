@@ -71,24 +71,9 @@ body, html {
 .highlight_fill {
   fill: #c67; }
 
-.noUi-target {
-  margin: 20px; }
-
-.noUi-handle {
-  background: #adc;
-  border: 1px solid #9a9;
-  box-shadow: none;
-  height: 12px; }
-
-.noUi-horizontal .noUi-handle {
-  height: 20px; }
-
-.noUi-handle:before, .noUi-handle:after {
-  height: 8px;
-  top: 5px; }
-
-.noUi-horizontal {
-  height: 10px; }
+#rangeSlider {
+  width: 100%;
+  margin: 20px 50px; }
 
 #dateDisplay {
   text-align: center;
