@@ -1,3 +1,7 @@
+body, html{
+  width: 100%;
+  height: 100%;
+}
 $colors : (
   confederate_state: #328,
   state: #4a9,
@@ -14,13 +18,17 @@ $ss: "Helvetica","Arial",sans-serif;
   .#{$colorName}_color { color: #{$colorValue}; }
 }
 
+#map {
+  width: 100%;
+  height: 100%;
+}
+
 #mapTooltip{
   position: absolute;
   z-index: 10;
   font-family: #{$ss};
   background: #fff;
   opacity: 0;
-  visibility: hidden;
   width: 220px;
   padding: 20px;
   border: 1px solid #ddd;

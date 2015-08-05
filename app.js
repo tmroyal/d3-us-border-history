@@ -226,8 +226,8 @@ var Tooltip = function(){
   tt_text = d3.select('#tt_text');
   tt_cite = d3.select('#tt_citation');
 
-  tt_div.on('mousemove', function(){
-    tooltip.move(event);
+  tt_div.on('mousemove', function(event){
+    tooltip.move(d3.event);
   });
 
   return tooltip;
@@ -287,7 +287,7 @@ var MapView = function(){
        opacity: 0,
      })
      .on('mousemove', function(){
-       Tooltip.move(event);
+       Tooltip.move(d3.event);
      });
 
   function setDimensions(){
@@ -333,14 +333,14 @@ var MapView = function(){
       .on('mouseover', function(d){
         d3.select(this).attr('class','state highlight_fill');
 
-        Tooltip.move(event);
+        Tooltip.move(d3.event);
         Tooltip.setData(d.properties, requestedDate);
         Tooltip.show();
       })
 
       .on('click', Tooltip.hide)
       .on('mousemove', function(){
-         Tooltip.move(event);
+         Tooltip.move(d3.event);
       })
 
       .on("mouseout", function(d){
