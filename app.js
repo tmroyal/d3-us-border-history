@@ -93,19 +93,19 @@ var DatePicker = function(initialIndex){
 
   function incrementDate(){
     if (requestedDateIndex < datePoints.length - 1){
-      updateDate(requestedDateIndex+1, true);
+      updateDate(requestedDateIndex+1, true, true);
       rangeSlider.attr('value', requestedDateIndex);
     }
   }
 
   function decrementDate(){
     if (requestedDateIndex > 0){
-      updateDate(requestedDateIndex-1, true);
+      updateDate(requestedDateIndex-1, true, true);
       rangeSlider.attr('value', requestedDateIndex);
     }
   }
 
-  function updateDate(index, updateMap){
+  function updateDate(index, updateMap, updateDataURI){
     var requestedFeatures, downloadData;
 
     // update display
@@ -119,16 +119,16 @@ var DatePicker = function(initialIndex){
       requestedFeatures = FeatureFilter.getFeaturesAtDate(requestedDate);
 
       updateCallback( requestedDate, requestedFeatures);
-
-      // set download data
-
+      
+    }
+    if(updateDataURI){
       downloadData = requestedFeatures.slice(0);
       downloadData = {
         "type": "FeatureCollection",
         "features": downloadData
       };
       
-      //downloadData = encodeURIComponent(JSON.stringify(downloadData));
+      downloadData = encodeURIComponent(JSON.stringify(downloadData));
 
       downloadLink.attr('href', 'data:application/csv;charset=utf-8,' + downloadData);
     }
@@ -147,14 +147,11 @@ var DatePicker = function(initialIndex){
 
     rangeSlider.attr("max", datePoints.length - 1)
     .on('input', function(){
-      updateDate(parseInt(d3.event.target.value),!isMobile);
+      updateDate(parseInt(d3.event.target.value),!isMobile, false);
+    })
+    .on('change', function(){
+      updateDate(parseInt(d3.event.target.value),true, true); 
     });
-
-    if(isMobile){
-      rangeSlider.on('change', function(){
-        updateDate(parseInt(d3.event.target.value),true);
-      });
-    }
 
     updateDate(50, true);    
   }
