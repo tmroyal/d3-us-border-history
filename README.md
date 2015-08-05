@@ -1,6 +1,8 @@
 # d3-us-border-history
 A visualization of the evolution of borders in the United States of America.
 
+[Live Demo](http://tmroyal.github.io/d3-us-border-history/)
+
 Historical border data is provided by the Dr. William M. Scholl Center for American History and Culture
 at the Newberry Library. Original GIS data is available under a creative commons license 
 at [http://publications.newberry.org/ahcbp/downloads/united_states.html](http://publications.newberry.org/ahcbp/downloads/united_states.html).
