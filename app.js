@@ -31,6 +31,9 @@ var FeatureFilter = function(){
 //--------------------------
 
 var DatePicker = function(initialIndex){
+  var mobileRegex = /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle|NetFront|Silk-Accelerated|(hpw|web)OS|Fennec|Minimo|Opera M(obi|ini)|Blazer|Dolfin|Dolphin|Skyfire|Zune/;
+  var isMobile = navigator.userAgent.match(mobileRegex);
+
   var picker = {};
 
   var requestedDate;
@@ -90,19 +93,19 @@ var DatePicker = function(initialIndex){
 
   function incrementDate(){
     if (requestedDateIndex < datePoints.length - 1){
-      updateDate(requestedDateIndex+1);
+      updateDate(requestedDateIndex+1, true);
       rangeSlider.attr('value', requestedDateIndex);
     }
   }
 
   function decrementDate(){
     if (requestedDateIndex > 0){
-      updateDate(requestedDateIndex-1);
+      updateDate(requestedDateIndex-1, true);
       rangeSlider.attr('value', requestedDateIndex);
     }
   }
 
-  function updateDate(index){
+  function updateDate(index, updateMap){
     var requestedFeatures, downloadData;
 
     // update display
@@ -110,23 +113,25 @@ var DatePicker = function(initialIndex){
     requestedDate = datePoints[requestedDateIndex];
 
     currentDateDisplay.text(formated(requestedDate));
+
+    if(updateMap){
     
-    requestedFeatures = FeatureFilter.getFeaturesAtDate(requestedDate);
+      requestedFeatures = FeatureFilter.getFeaturesAtDate(requestedDate);
 
-    updateCallback( requestedDate, requestedFeatures);
+      updateCallback( requestedDate, requestedFeatures);
 
-    // set download data
+      // set download data
 
-    downloadData = requestedFeatures.slice(0);
-    downloadData = {
-      "type": "FeatureCollection",
-      "features": downloadData
-    };
-    
-    downloadData = encodeURIComponent(JSON.stringify(downloadData));
+      downloadData = requestedFeatures.slice(0);
+      downloadData = {
+        "type": "FeatureCollection",
+        "features": downloadData
+      };
+      
+      //downloadData = encodeURIComponent(JSON.stringify(downloadData));
 
-    downloadLink.attr('href', 'data:application/csv;charset=utf-8,' + downloadData);
-
+      downloadLink.attr('href', 'data:application/csv;charset=utf-8,' + downloadData);
+    }
   }
 
   function setupUI(updateCallback){
@@ -142,10 +147,16 @@ var DatePicker = function(initialIndex){
 
     rangeSlider.attr("max", datePoints.length - 1)
     .on('input', function(){
-      updateDate(parseInt(d3.event.target.value));
+      updateDate(parseInt(d3.event.target.value),!isMobile);
     });
 
-    updateDate(50);    
+    if(isMobile){
+      rangeSlider.on('change', function(){
+        updateDate(parseInt(d3.event.target.value),true);
+      });
+    }
+
+    updateDate(50, true);    
   }
   
   picker.init = function(data, confederateDates, updateCB){

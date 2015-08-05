@@ -72,8 +72,34 @@ body, html {
   fill: #c67; }
 
 #rangeSlider {
-  width: 100%;
-  margin: 20px 50px; }
+  width: 80%;
+  margin: 20px 50px;
+  height: 20px; }
+
+input[type=range] {
+  -webkit-appearance: none; }
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 300px;
+  height: 5px;
+  background: #ddd;
+  border: none;
+  border-radius: 3px; }
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background: black;
+  margin-top: -13px; }
+
+input[type=range]:focus {
+  outline: none; }
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #ccc; }
 
 #dateDisplay {
   text-align: center;
@@ -85,3 +111,6 @@ body, html {
   font-family: Helvetica, Arial, sans-serif;
   color: #666;
   text-align: center; }
+
+button {
+  font-size: 15px; }
