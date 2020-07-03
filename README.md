@@ -12,6 +12,7 @@ at [http://publications.newberry.org/ahcbp/downloads/united_states.html](http://
 - In the dataset, there is mention made of the state of Deseret. This is not drawn on this visualization, but it is included in
   the dataset.
 - The dataset does not include Confederate Status during the civil war, so this was included programmatically.
+- It does not include Guam, the Phillipines, Cuba, Puerto Rico, the Virgin islands, and numerous other current and historical U.S. Territories.
 
 # Licenses
 
